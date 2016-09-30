@@ -3,22 +3,22 @@
 var soap = require('soap');
 
 module.exports = {
-	createClient1: function(url, options, callback){
+	createClient: function(url, options, callback){
 		soap.createClient(url,options, function(err, client) {
             callback(err, client);
         });
 	},
-	createWSSecurity1: function(username, password){
+	createWSSecurity: function(username, password){
 		return new soap.WSSecurity(username, password);
 	},
-	initArgs1: function(args, msg){
+	initArgs: function(args, msg){
 		return {
         	messageId : 'id',
         	version : '1.0',
         	licenseKey : msg.apiLicenseKey || args.apiLicenseKey
 		};
 	},
-	parseError1: function(err){
+	parseError: function(err){
 		try{
 			return JSON.stringify(err.root.Envelope.Body.Fault.detail);
 		}
@@ -26,7 +26,7 @@ module.exports = {
 			return err;
 		}
 	},
-	handleError1: function(node, err, msg) {
+	handleError: function(node, err, msg) {
 	    node.error(err);
         console.log(err);
 	    //msg.error = err;
