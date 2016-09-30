@@ -1,0 +1,82 @@
+<script type="text/x-red" data-template-name="SIM List">
+    <div class="form-row">
+        <label for="node-input-name"><i class="icon-tag"></i> Name</label>
+        <input type="text" id="node-input-name" placeholder="Name">
+    </div>
+    <div class="form-row">
+        <label for="node-input-url"><i class="fa fa-globe"></i> AT&T CC url</label>
+        <input type="text" id="node-input-url" placeholder="https://apitest.jasperwireless.com">
+    </div>
+    <div class="form-row">
+       <label for="node-input-username"><i class="fa fa-user"></i> Username</label>
+       <input type="password" id="node-input-username" placeholder="">
+    </div>
+    <div class="form-row">
+       <label for="node-input-password"><i class="fa fa-lock"></i> Password</label>
+       <input type="password" id="node-input-password" placeholder="">
+    </div>
+    <div class="form-row">
+       <label for="node-input-apiLicenseKey"><i class="icon-tag"></i>API License Key</label>
+       <input type="text" id="node-input-apiLicenseKey" placeholder="">
+    </div>
+    <div class="form-row">
+       <label for="node-input-mod_since"><i class="icon-tag"></i> mod_since</label>
+       <input type="text" id="node-input-mod_since" placeholder="">
+    </div>
+    <div class="form-row">
+        <label for="node-input-sim_state"><i class="icon-tag"></i> Status</label>
+        <select id="node-input-status" style="width:73.5%;">
+          <option value="ACTIVATIONREADY">Activation Ready</option>
+          <option value="ACTIVATED">Activated</option>
+          <option value="DEACTIVATED">Deactivated</option>
+		  <option value="PURGED">Purged</option>
+          <option value="UNKNOWN">unknown</option>
+        </select>
+    </div>
+   
+</script>
+
+<script type="text/x-red" data-help-name="SIM List">
+<p>Get the terminals accessible to this user which have been modified since the given time (not inclusive). If the "since" parameter is omitted, it means return all iccids. The result will be a list of iccids ordered by oldest first. This API call is useful for keeping client side data in sync with Jasper's. </xs:documentation></p>
+<br/>
+<p>Each field in this node can be set in <code>msg</code> using CamelCase.</p>
+<p><code>API License Key</code> - AT&T Control Center account&#39;s api license key. <b>(mandatory)</b></p>
+<p><code>mod_since</code> This is the date since a SIM has been modified, it must be entered in format <b> 2008-08-26T00:00:00Z </b> If left blank, all SIMs will be returned. <p>
+<p><code>sim_state</code></p>
+<p style="text-indent: 2.5em;"> <b> ACTIVATIONREADY </b> </p> 
+<p style="margin-left: 5em;"> All SIMs in Activation Ready state. An Activation Ready device can establish a data connection, but is generally not considered billable. When an Activation Ready device makes a data connection or sends an SMS, Control Center automatically changes its status to Activated , causing the device to become billable.</p>
+<p style="text-indent: 2.5em;"> <b> ACTIVATED </b> </p>
+<p style="margin-left: 5em;"> All SIMs in Activatated state.An Activated device can establish data connections and is considered billable.</p>
+<p style="text-indent: 2.5em;"> <b> ACTIVATED </b> </p>
+<p style="margin-left: 5em;"> All SIMs in Activatated state. This state does not allow a device to establish data connections. SIMs in the Deactivated state are generally not considered billable.</p>
+<p style="text-indent: 2.5em;"> <b> PURGED </b> </p>
+<p style="margin-left: 5em;"> All SIMs in Purged state. The Purged state does not allow a device to establish data connections. A Purged device has been physically removed from the network by the operator, typically in response to a customer request or as part of a SIM replacement policy.</p>
+<p style="text-indent: 2.5em;"> <b> UNKNOWN </b> </p>
+<p style="margin-left: 5em;"> All SIMs will be reported.</p>
+
+</script>
+
+
+<script type="text/javascript">
+    RED.nodes.registerType('SIM List',{
+        category: 'jasper',
+        color: '#00aee3',
+        defaults: {
+            name: {value:""},
+            url : {value:"https://apitest.jasperwireless.com"},
+            username : {value:""},
+            password : {value:""},
+            apiLicenseKey : {value:""},
+            mod_since : {value:""},
+            sim_state:{value:""},
+            encryptObj: {value: ["username", "password"]}
+        },
+        outputs:1,
+        inputs:1,
+        icon: "file.png",
+        label: function() {
+            return this.name||"SIM LIST";
+        }
+    });
+</script>
+
